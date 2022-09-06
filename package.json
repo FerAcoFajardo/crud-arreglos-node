@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/FerAcoFajardo/crud-arreglos-node/issues"
   },
-  "homepage": "https://github.com/FerAcoFajardo/crud-arreglos-node#readme"
+  "homepage": "https://github.com/FerAcoFajardo/crud-arreglos-node#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
