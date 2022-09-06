@@ -74,6 +74,10 @@ class Producto{
 
         
     }
+
+    imprimir(){
+            console.log(`Producto: ${this.nombre} - Codigo: ${this.codigo} - Precio: ${this.precio} - Stock ${this.stock} - Fecha de Surtido: ${this.fechaSurtido}`);
+    }
 }
 
 export {Producto};

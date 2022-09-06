@@ -5,16 +5,23 @@ import { question } from "readline-sync";
 const productoDAO = new ProductoDAO();
 
 const agregarProducto = () => {
-    // try{
+    try{
         let nombre = question("Ingrese el nombre del producto: ");
         let codigo = question("Ingrese el codigo del producto: ");
         let precio = question("Ingrese el precio del producto: ");
+        let stock = question("Ingrese el stock del producto: ");
+        let fecha = question("Ingrese la fecha de vencimiento del producto: ");
         precio = Number(precio);
-        let producto = new Producto(nombre, codigo, precio);
+        fecha = new Date(fecha);
+        stock = Number(stock);
+        nombre = String(nombre);
+        codigo = String(codigo);
+
+        let producto = new Producto(nombre, codigo, precio, stock, fecha);
         productoDAO.agregarProducto(producto);
-    // }catch(error){
-        // console.log(error.message);
-    // }
+    }catch(error){
+        console.log(error.message);
+    }
 }
 
 const eliminarProducto = () => {
@@ -22,15 +29,13 @@ const eliminarProducto = () => {
     productoDAO.eliminarProducto(codigo);
 }
 
-const printProductos = (producto) => {
-    console.log(`Producto: ${producto.nombre} - Codigo: ${producto.codigo} - Precio: ${producto.precio}`);
-}        
+
 
 const buscarProducto = () => {
     let codigo = question("Ingrese el codigo del producto: ");
     let producto = productoDAO.buscarProducto(codigo);
     if(producto){
-        printProductos(producto);
+        producto.imprimir();
     }else{
         console.log("El producto no existe");
     }
@@ -43,8 +48,17 @@ const actualizarProducto = () => {
         if(producto){
             let nombre = question("Ingrese el nuevo nombre del producto: ");
             let precio = question("Ingrese el nuevo precio del producto: ");
+            let stock = question("Ingrese el nuevo stock del producto: ");
+            let fecha = question("Ingrese la nueva fecha de vencimiento del producto: ");
+            precio = Number(precio);
+            fecha = new Date(fecha);
+            stock = Number(stock);
+            nombre = String(nombre);
+            
             producto.nombre = nombre;
-            producto.precio = Number(precio);
+            producto.precio = precio;
+            producto.stock = stock;
+            producto.fecha = fecha;
             productoDAO.actualizarProducto(producto);
         }else{
             console.log("El producto no existe");
@@ -58,7 +72,7 @@ const listarProductos = () => {
     let productos = productoDAO.productos;
     if(productos.length > 0){
         productos.forEach(producto => {
-            printProductos(producto);
+            producto.imprimir();
         });
     }else{
         console.log("No hay productos registrados");
