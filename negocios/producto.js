@@ -1,20 +1,39 @@
-let validarPrecio = (precio) => {
-    if(typeof(precio ) === 'number'){
-        return true;
-    }
-}
+import {validarDatoPrecio, validarDatoCodigo, validarDatoNombre,  validarDatoStock, validarTipoDatoFechaSurtido} from './validaciones.js';
 
 
 class Producto{
-    constructor(nombre, codigo, precio){
-        this._nombre = nombre;
-        this._codigo = codigo;
+    constructor(nombre, codigo, precio, stock, fechaSurtido){
+        if(validarDatoNombre(nombre)){
+
+            this._nombre = nombre;
+        }else{
+            throw new Error("El nombre no es valido");
+        }
+        if(validarDatoCodigo(codigo)){
+            this._codigo = codigo;
+        }else{
+            throw new Error("El codigo no es valido");
+        }
+
+        if(validarDatoStock(stock)){
+            this._stock = stock;
+        }else{
+            throw new Error("El stock no es valido");
+        }
         
-        if (validarPrecio(precio)){
+        if (validarDatoPrecio(precio)){
             this._precio = precio;
         }else{
             throw new Error("El precio no es un numero");
         }
+
+        if(validarTipoDatoFechaSurtido(fechaSurtido)){
+            this._fechaSurtido = fechaSurtido;
+        }else{
+            throw new Error("La fecha no es valida");
+        }
+
+        
     }
 
     get nombre(){
@@ -23,7 +42,11 @@ class Producto{
     }
 
     set nombre(nombre){
+        if(validarDatoNombre(nombre)){
             this._nombre = nombre;
+        }else{
+            throw new Error("El nombre no es valido");
+        }
     }
 
     get codigo(){
@@ -31,7 +54,11 @@ class Producto{
     }
 
     set codigo(codigo){
-        this._codigo = codigo;
+        if(validarDatoCodigo(codigo)){
+            this._codigo = codigo;
+        }else{
+            throw new Error("El codigo no es valido");
+        }
     }
 
     get precio(){
@@ -39,11 +66,13 @@ class Producto{
     }
 
     set precio(precio){
-        if(validarPrecio(precio)){
+        if(validarDatoPrecio(precio)){
             this._precio = precio;
         }else{
             throw new Error("El precio no es un numero");
         }
+
+        
     }
 }
 
