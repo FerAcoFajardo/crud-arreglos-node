@@ -5,15 +5,16 @@ import { question } from "readline-sync";
 const productoDAO = new ProductoDAO();
 
 const agregarProducto = () => {
-    try{
+    // try{
         let nombre = question("Ingrese el nombre del producto: ");
         let codigo = question("Ingrese el codigo del producto: ");
         let precio = question("Ingrese el precio del producto: ");
+        precio = Number(precio);
         let producto = new Producto(nombre, codigo, precio);
         productoDAO.agregarProducto(producto);
-    }catch(error){
-        console.log(error.message);
-    }
+    // }catch(error){
+        // console.log(error.message);
+    // }
 }
 
 const eliminarProducto = () => {
@@ -21,11 +22,15 @@ const eliminarProducto = () => {
     productoDAO.eliminarProducto(codigo);
 }
 
+const printProductos = (producto) => {
+    console.log(`Producto: ${producto.nombre} - Codigo: ${producto.codigo} - Precio: ${producto.precio}`);
+}        
+
 const buscarProducto = () => {
     let codigo = question("Ingrese el codigo del producto: ");
     let producto = productoDAO.buscarProducto(codigo);
     if(producto){
-        console.log(producto);
+        printProductos(producto);
     }else{
         console.log("El producto no existe");
     }
@@ -39,7 +44,7 @@ const actualizarProducto = () => {
             let nombre = question("Ingrese el nuevo nombre del producto: ");
             let precio = question("Ingrese el nuevo precio del producto: ");
             producto.nombre = nombre;
-            producto.precio = precio;
+            producto.precio = Number(precio);
             productoDAO.actualizarProducto(producto);
         }else{
             console.log("El producto no existe");
@@ -53,7 +58,7 @@ const listarProductos = () => {
     let productos = productoDAO.productos;
     if(productos.length > 0){
         productos.forEach(producto => {
-            console.log(producto);
+            printProductos(producto);
         });
     }else{
         console.log("No hay productos registrados");
@@ -62,6 +67,7 @@ const listarProductos = () => {
 
 
 const menu = () => {
+    let opcion = 0;
     do{
         console.log(`
         
@@ -76,17 +82,17 @@ const menu = () => {
         
         `);
 
-        let opcion = question("Ingrese una opcion: ");
+        opcion = question("Ingrese una opcion: ");
 
         if (opcion == 1) {
             agregarProducto();
-        }else if(option == 2){
+        }else if(opcion == 2){
             eliminarProducto();
-        }else if (option == 3){
+        }else if (opcion == 3){
             buscarProducto();
-        }else if (option == 4){
+        }else if (opcion == 4){
             actualizarProducto();
-        }else if (option == 5){
+        }else if (opcion == 5){
             listarProductos();
         }
 

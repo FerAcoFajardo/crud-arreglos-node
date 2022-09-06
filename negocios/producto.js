@@ -1,5 +1,5 @@
 let validarPrecio = (precio) => {
-    if(nombre instanceof Number){
+    if(typeof(precio ) === 'number'){
         return true;
     }
 }
@@ -9,6 +9,7 @@ class Producto{
     constructor(nombre, codigo, precio){
         this._nombre = nombre;
         this._codigo = codigo;
+        
         if (validarPrecio(precio)){
             this._precio = precio;
         }else{
