@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/FerAcoFajardo/crud-arreglos-node#readme",
   "dependencies": {
-    "eslint": "^8.23.0",
-    "readline-sync": "^1.4.10"
+    "eslint": "^8.23.1",
+    "mysql2": "^2.3.3",
+    "readline-sync": "^1.4.10",
+    "sequelize": "^6.23.0"
   }
 }
