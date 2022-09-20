@@ -74,7 +74,7 @@ Producto.init({
         }
     },
     fechaSurtido: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         allowNull: false,
         get (){
             const value = this.getDataValue('fechaSurtido');
@@ -83,9 +83,10 @@ Producto.init({
         set (fechaSurtido){
             if(validarTipoDatoFechaSurtido(fechaSurtido)){
                 // Format date to iso
-                const date = new Date(fechaSurtido);
-                const isoDate = date.toISOString().split('T')[0];
-                this.setDataValue('fechaSurtido', isoDate);
+                // const date = new Date(fechaSurtido);
+                // const isoDate = date.toISOString();
+                // console.log(isoDate);
+                this.setDataValue('fechaSurtido', fechaSurtido);
             }else{
                 throw new Error("La fecha no es valida");
             }

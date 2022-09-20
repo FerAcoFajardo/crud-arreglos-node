@@ -29,7 +29,7 @@ const agregarProducto = async () => {
         });
         await productoDAO.agregarProducto(producto);
     }catch(error){
-        console.log(error.message);
+        console.log(error);
     }
 }
 
@@ -67,7 +67,7 @@ const actualizarProducto = async () => {
             producto.nombre = nombre;
             producto.precio = precio;
             producto.stock = stock;
-            producto.fecha = fecha;
+            producto.fechaSurtido = fecha;
             await productoDAO.actualizarProducto(producto);
         }else{
             console.log("El producto no existe");
