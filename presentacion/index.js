@@ -1,5 +1,6 @@
 // import { Producto } from "../src/negocios/producto.js";
-import { Producto, imprimir } from "../src/dominio/producto.js";
+import { Producto } from "../src/dominio/producto.js";
+import { imprimir } from "../src/dominio/utils.js";
 import { ProductoDAO } from "../src/data/repositories/productoRepository.js";
 import { question } from "readline-sync";
 
@@ -18,7 +19,14 @@ const agregarProducto = async () => {
         nombre = String(nombre);
         codigo = String(codigo);
 
-        let producto = new Producto(nombre, codigo, precio, stock, fecha);
+        let producto = Producto.build({
+            nombre: nombre,
+            codigo: codigo,
+            precio: precio,
+            stock: stock,
+            fechaSurtido: fecha
+
+        });
         await productoDAO.agregarProducto(producto);
     }catch(error){
         console.log(error.message);
@@ -27,14 +35,14 @@ const agregarProducto = async () => {
 
 const eliminarProducto = async () => {
     let codigo = question("Ingrese el codigo del producto: ");
-    productoDAO.eliminarProducto(codigo);
+    await productoDAO.eliminarProducto(codigo);
 }
 
 
 
 const buscarProducto = async () => {
     let codigo = question("Ingrese el codigo del producto: ");
-    let producto = productoDAO.buscarProducto(codigo);
+    let producto = await productoDAO.buscarProducto(codigo);
     if(producto){
         imprimir(producto);
     }else{
@@ -45,7 +53,7 @@ const buscarProducto = async () => {
 const actualizarProducto = async () => {
     try{
         let codigo = question("Ingrese el codigo del producto: ");
-        let producto = productoDAO.buscarProducto(codigo);
+        let producto = await productoDAO.buscarProducto(codigo);
         if(producto){
             let nombre = question("Ingrese el nuevo nombre del producto: ");
             let precio = question("Ingrese el nuevo precio del producto: ");
@@ -60,7 +68,7 @@ const actualizarProducto = async () => {
             producto.precio = precio;
             producto.stock = stock;
             producto.fecha = fecha;
-            productoDAO.actualizarProducto(producto);
+            await productoDAO.actualizarProducto(producto);
         }else{
             console.log("El producto no existe");
         }
@@ -70,7 +78,7 @@ const actualizarProducto = async () => {
 }
 
 const listarProductos = async () => {
-    let productos = productoDAO.productos;
+    let productos = await productoDAO.listarProductos();
     if(productos.length > 0){
         productos.forEach(producto => {
             imprimir(producto);
