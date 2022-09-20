@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  db:
+    image: "mysql:8.0.28-oracle"
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: "productos_sql"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: productos_db
+      MYSQL_ROOT_PASSWORD: 12345
+    volumes:
+      - "./local_dev_db:/usr/src/db"

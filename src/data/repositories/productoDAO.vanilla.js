@@ -1,4 +1,4 @@
-import {Producto} from '../negocios/producto.js';
+import {Producto} from '../dominio/producto.js';
 
 class ProductoDAO {
 

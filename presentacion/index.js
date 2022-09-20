@@ -1,10 +1,11 @@
-import { Producto } from "../negocios/producto.js";
-import { ProductoDAO } from "../dao/productoDAO.js";
+// import { Producto } from "../src/negocios/producto.js";
+import { Producto, imprimir } from "../src/dominio/producto.js";
+import { ProductoDAO } from "../src/data/repositories/productoRepository.js";
 import { question } from "readline-sync";
 
 const productoDAO = new ProductoDAO();
 
-const agregarProducto = () => {
+const agregarProducto = async () => {
     try{
         let nombre = question("Ingrese el nombre del producto: ");
         let codigo = question("Ingrese el codigo del producto: ");
@@ -18,30 +19,30 @@ const agregarProducto = () => {
         codigo = String(codigo);
 
         let producto = new Producto(nombre, codigo, precio, stock, fecha);
-        productoDAO.agregarProducto(producto);
+        await productoDAO.agregarProducto(producto);
     }catch(error){
         console.log(error.message);
     }
 }
 
-const eliminarProducto = () => {
+const eliminarProducto = async () => {
     let codigo = question("Ingrese el codigo del producto: ");
     productoDAO.eliminarProducto(codigo);
 }
 
 
 
-const buscarProducto = () => {
+const buscarProducto = async () => {
     let codigo = question("Ingrese el codigo del producto: ");
     let producto = productoDAO.buscarProducto(codigo);
     if(producto){
-        producto.imprimir();
+        imprimir(producto);
     }else{
         console.log("El producto no existe");
     }
 }
 
-const actualizarProducto = () => {
+const actualizarProducto = async () => {
     try{
         let codigo = question("Ingrese el codigo del producto: ");
         let producto = productoDAO.buscarProducto(codigo);
@@ -68,11 +69,11 @@ const actualizarProducto = () => {
     }
 }
 
-const listarProductos = () => {
+const listarProductos = async () => {
     let productos = productoDAO.productos;
     if(productos.length > 0){
         productos.forEach(producto => {
-            producto.imprimir();
+            imprimir(producto);
         });
     }else{
         console.log("No hay productos registrados");
@@ -80,7 +81,7 @@ const listarProductos = () => {
 }
 
 
-const menu = () => {
+const menu = async () => {
     let opcion = 0;
     do{
         console.log(`
@@ -99,19 +100,19 @@ const menu = () => {
         opcion = question("Ingrese una opcion: ");
 
         if (opcion == 1) {
-            agregarProducto();
+            await agregarProducto();
         }else if(opcion == 2){
-            eliminarProducto();
+            await eliminarProducto();
         }else if (opcion == 3){
-            buscarProducto();
+            await buscarProducto();
         }else if (opcion == 4){
-            actualizarProducto();
+            await actualizarProducto();
         }else if (opcion == 5){
-            listarProductos();
+            await listarProductos();
         }
 
     }while(opcion != 0);
 }
 
 
-menu();
+await menu();
